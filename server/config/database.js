@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
  */
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/inventory_reservation';
+
+    const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://shubham:Recurssion@cluster0.ce35oqp.mongodb.net/inventory_reservation';
 
     await mongoose.connect(mongoURI);
     
