@@ -43,4 +43,19 @@ export const checkoutApi = {
   cleanup: () => api.post('/checkout/cleanup'),
 };
 
+// Admin APIs
+export const adminApi = {
+  // Get dashboard statistics
+  getStats: () => api.get('/admin/stats'),
+
+  // Get top users
+  getTopUsers: (limit = 10) => api.get(`/admin/users/top?limit=${limit}`),
+
+  // Get product performance
+  getProductPerformance: () => api.get('/admin/products/performance'),
+
+  // Get recent activity
+  getRecentActivity: (limit = 20) => api.get(`/admin/activity?limit=${limit}`),
+};
+
 export default api;

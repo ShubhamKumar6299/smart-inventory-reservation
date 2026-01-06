@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/database');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const checkoutRoutes = require('./routes/checkoutRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const reservationCleanup = require('./utils/reservationCleanup');
 const seedInventory = require('./seeds/inventorySeed');
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/inventory', inventoryRoutes);
 app.use('/checkout', checkoutRoutes);
+app.use('/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

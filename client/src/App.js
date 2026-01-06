@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { v4 as uuidv4 } from 'uuid';
 import { inventoryApi, checkoutApi } from './services/api';
-import { ProductCard, CheckoutModal } from './components';
+import { ProductCard, CheckoutModal, AdminDashboard } from './components';
 import './App.css';
 
 // Generate or retrieve user ID from localStorage
@@ -23,6 +23,7 @@ function App() {
   const [currentReservation, setCurrentReservation] = useState(null);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
   const userId = getUserId();
 
   // Fetch all products
@@ -209,6 +210,18 @@ function App() {
         onExpire={handleExpire}
         isProcessing={isProcessing}
       />
+
+      {showAdmin && (
+        <AdminDashboard onClose={() => setShowAdmin(false)} />
+      )}
+
+      <button 
+        className="admin-btn"
+        onClick={() => setShowAdmin(true)}
+        title="Admin Dashboard"
+      >
+        📊
+      </button>
 
       <footer className="app-footer">
         <p>
