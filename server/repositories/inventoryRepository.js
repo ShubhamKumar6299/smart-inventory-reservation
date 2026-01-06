@@ -1,9 +1,7 @@
 const Inventory = require('../models/Inventory');
 
 class InventoryRepository {
-  /**
-   * Find inventory item by SKU
-   */
+
   async findBySku(sku) {
     return await Inventory.findOne({ sku: sku.toUpperCase() });
   }
