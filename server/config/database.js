@@ -7,10 +7,14 @@ const connectDB = async () => {
   try {
 
     const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://shubham:Recurssion@cluster0.ce35oqp.mongodb.net/inventory_reservation';
-
-    await mongoose.connect(mongoURI);
-    
-    console.log(`✅ MongoDB Connected: ${mongoose.connection.host}`);
+    console.log('Connecting to MongoDB:', mongoURI);
+    try {
+      await mongoose.connect(mongoURI);
+      console.log(`✅ MongoDB Connected: ${mongoose.connection.host}`);
+    } catch (err) {
+      console.error('❌ MongoDB connection error:', err);
+      throw err;
+    }
 
     // Handle connection events
     mongoose.connection.on('error', (err) => {
