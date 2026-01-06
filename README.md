@@ -1,3 +1,28 @@
+## 📊 Admin Dashboard & Analytics
+
+The system includes a full-featured **Admin Dashboard** for real-time analytics and operational insights:
+
+**Features:**
+- **Overview Tab:** Total products, stock, reservations, conversion rate
+- **Users Tab:** Top users, order stats, conversion rates
+- **Products Tab:** Product performance, stock status, sales
+- **Activity Tab:** Recent reservation and order activity
+
+**How to Access:**
+- Click the <strong>📊 button</strong> in the bottom-right of the app
+- Or visit the dashboard route in the React app
+
+**Admin API Endpoints:**
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/admin/stats` | GET | Dashboard summary stats |
+| `/admin/users/top` | GET | Top users ranking |
+| `/admin/products/performance` | GET | Product analytics |
+| `/admin/activity` | GET | Recent reservation activity |
+
+All endpoints return JSON and are used by the dashboard UI.
+
 # 🛒 Smart Inventory Reservation System
 
 <div align="center">
@@ -8,7 +33,10 @@
 ![MongoDB](https://img.shields.io/badge/mongodb-%3E%3D6.0-green.svg)
 ![React](https://img.shields.io/badge/react-18.x-61dafb.svg)
 
+
 **A production-ready, scalable inventory reservation system designed for high-concurrency e-commerce platforms**
+
+<strong>Now with a built-in <span style="color:#764ba2">Admin Dashboard</span> for real-time analytics and user/product insights!</strong>
 
 [Features](#-key-features) • [Architecture](#-system-architecture) • [Tech Stack](#-tech-stack--justification) • [Setup](#-getting-started) • [API Docs](#-api-documentation)
 
@@ -18,23 +46,25 @@
 
 ## 📋 Table of Contents
 
+
 1. [Problem Statement](#-problem-statement)
 2. [Our Solution](#-our-solution)
 3. [Key Features](#-key-features)
-4. [System Architecture](#-system-architecture)
-5. [Tech Stack & Justification](#-tech-stack--justification)
-6. [Code Flow & Data Journey](#-code-flow--data-journey)
-7. [Design Patterns & Principles](#-design-patterns--principles)
-8. [Concurrency Handling](#-concurrency-handling)
-9. [TTL-Based Reservation Expiry](#-ttl-based-reservation-expiry)
-10. [Idempotency Implementation](#-idempotency-implementation)
-11. [API Documentation](#-api-documentation)
-12. [Database Schema Design](#-database-schema-design)
-13. [Error Handling Strategy](#-error-handling-strategy)
-14. [Testing Strategy](#-testing-strategy)
-15. [Scalability Considerations](#-scalability-considerations)
-16. [Getting Started](#-getting-started)
-17. [Future Enhancements](#-future-enhancements)
+4. [Admin Dashboard & Analytics](#-admin-dashboard--analytics)
+5. [System Architecture](#-system-architecture)
+6. [Tech Stack & Justification](#-tech-stack--justification)
+7. [Code Flow & Data Journey](#-code-flow--data-journey)
+8. [Design Patterns & Principles](#-design-patterns--principles)
+9. [Concurrency Handling](#-concurrency-handling)
+10. [TTL-Based Reservation Expiry](#-ttl-based-reservation-expiry)
+11. [Idempotency Implementation](#-idempotency-implementation)
+12. [API Documentation](#-api-documentation)
+13. [Database Schema Design](#-database-schema-design)
+14. [Error Handling Strategy](#-error-handling-strategy)
+15. [Testing Strategy](#-testing-strategy)
+16. [Scalability Considerations](#-scalability-considerations)
+17. [Getting Started](#-getting-started)
+18. [Future Enhancements](#-future-enhancements)
 
 ---
 
@@ -124,10 +154,19 @@ User Journey:
 - Automatic rollback on failures
 - Detailed logging for debugging
 
+
 ### 6. **Real-Time UI Updates**
 - Live countdown timers showing reservation expiry
 - Instant feedback on reservation status
 - Toast notifications for all state changes
+
+### 7. **Admin Dashboard & Analytics**
+- Built-in dashboard for admins to monitor:
+  - User rankings (top buyers, conversion rates)
+  - Product performance (stock, reservations, sales)
+  - Recent reservation activity feed
+- Accessible via 📊 button in the app (bottom-right)
+- All analytics update in real-time (auto-refresh)
 
 ---
 
@@ -154,6 +193,7 @@ User Journey:
 │  │                     Express.js Server                            │   │
 │  │  ┌──────────────────────────────────────────────────────────┐  │   │
 │  │  │                      Middleware                           │  │   │
+│  │  │  [CORS] → [JSON Parser] → [Logger] → [Error Handler]     │  │   │
 │  │  │  [CORS] → [JSON Parser] → [Logger] → [Error Handler]     │  │   │
 │  │  └──────────────────────────────────────────────────────────┘  │   │
 │  │  ┌─────────────────┐  ┌─────────────────┐                      │   │
@@ -1132,7 +1172,7 @@ npm start
 | WebSocket | Real-time inventory updates | High |
 | Redis Cache | Faster inventory reads | High |
 | Rate Limiting | Prevent abuse | Medium |
-| Analytics Dashboard | Reservation metrics | Medium |
+| Analytics Dashboard | Reservation metrics, user/product insights | Medium |
 | Multi-warehouse | Distributed inventory | Low |
 | Batch Operations | Bulk reservations | Low |
 
@@ -1144,6 +1184,7 @@ npm start
 ├─────────────────────────────────────────────────────────────┤
 │  ✓ WebSocket for real-time stock updates                    │
 │  ✓ Redis for caching hot inventory items                    │
+│  ✓ Analytics dashboard extensibility (custom metrics)       │
 │  ✓ Elasticsearch for inventory search                       │
 │  ✓ Kubernetes for container orchestration                   │
 │  ✓ Prometheus + Grafana for monitoring                      │
@@ -1164,7 +1205,8 @@ flexyPeHackathon/
 │   │   └── database.js              # MongoDB connection
 │   ├── controllers/
 │   │   ├── inventoryController.js   # Inventory HTTP handlers
-│   │   └── checkoutController.js    # Checkout HTTP handlers
+│   │   ├── checkoutController.js    # Checkout HTTP handlers
+│   │   └── adminController.js       # Admin analytics handlers
 │   ├── middleware/
 │   │   └── errorHandler.js          # Centralized error handling
 │   ├── models/
@@ -1175,7 +1217,8 @@ flexyPeHackathon/
 │   │   └── reservationRepository.js # Reservation data access
 │   ├── routes/
 │   │   ├── inventoryRoutes.js       # /inventory endpoints
-│   │   └── checkoutRoutes.js        # /checkout endpoints
+│   │   ├── checkoutRoutes.js        # /checkout endpoints
+│   │   └── adminRoutes.js           # /admin endpoints
 │   ├── services/
 │   │   └── inventoryService.js      # Business logic
 │   ├── seeds/
@@ -1192,11 +1235,13 @@ flexyPeHackathon/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── ProductCard.jsx      # Product display + reserve
-│   │   │   └── CheckoutModal.jsx    # Checkout UI
+│   │   │   ├── CheckoutModal.jsx    # Checkout UI
+│   │   │   ├── AdminDashboard.js    # Admin dashboard UI
+│   │   │   └── AdminDashboard.css   # Admin dashboard styles
 │   │   ├── hooks/
 │   │   │   └── useCountdown.js      # Timer hook
 │   │   ├── services/
-│   │   │   └── api.js               # API client
+│   │   │   └── api.js               # API client (includes admin endpoints)
 │   │   ├── App.js
 │   │   ├── App.css
 │   │   └── index.js
